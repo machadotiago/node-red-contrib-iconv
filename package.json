@@ -1,7 +1,7 @@
 {
     "name"          : "node-red-contrib-iconv",
-    "version"       : "0.0.2",
-    "description"   : "A Node-RED node based on iconv-lite for encoding conversion to pure JS encoding",
+    "version"       : "0.0.3",
+    "description"   : "A Node-RED node based on iconv-lite for encoding or decoding conversion to pure JS encoding",
     "dependencies"  : {
         "iconv-lite":"^0.4.19"
     },

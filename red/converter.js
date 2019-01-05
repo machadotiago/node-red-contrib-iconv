@@ -14,33 +14,36 @@ Copyright 2017 Tiago Machado
    limitations under the License.
 */
 
-module.exports = function(RED) {
+module.exports = function (RED) {
     "use strict";
-    
+
     var iconv = require('iconv-lite');
-    
+
     function Converter(config) {
-        RED.nodes.createNode(this,config);
+        RED.nodes.createNode(this, config);
         this.from = config.from;
         var node = this;
 
-        this.on('input', function(msg) {
+        this.on('input', function (msg) {
 
-            if(iconv.encodingExists(node.from)){
+            if (iconv.encodingExists(node.from)) {
                 if (msg.hasOwnProperty("payload")) {
                     if (Buffer.isBuffer(msg.payload)) {
-                        msg.payload = iconv.decode(msg.payload,node.from);
+                        msg.payload = iconv.decode(msg.payload, node.from);
                         node.send(msg);
+                    } else if (typeof msg.payload === "string") {
+                        msg.payload = iconv.encode(msg.payload, node.from)
+                        node.send(msg);
+                    } else {
+                        node.error(RED._("converter.error.type"), msg);
                     }
-                    else {
-                        node.warn(RED._("converter.error.type"));
-                    }
+                } else {
+                    node.error(RED._("converter.error.payload"), msg);
                 }
-                else { node.warn(RED._("converter.error.payload")); }
-            }else{
-                node.warn(RED._("converter.error.encoding")+node.from);
+            } else {
+                node.error(RED._("converter.error.encoding") + node.from, msg);
             }
         });
     }
-    RED.nodes.registerType("converter",Converter);
+    RED.nodes.registerType("converter", Converter);
 }

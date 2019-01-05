@@ -26,7 +26,8 @@
 </script>
 
 <script type="text/x-red" data-help-name="converter">
-    <p>A node that converts a buffer <code>msg.payload</code> from the choosed encoding format to pure Javascript chracter encoding.</p>
+    <p>For decoding simply send a Buffer inside <code>msg.payload</code> and the choosed encoding format will be applied to convert it to pure Javascript chracter encoding.</p>
+    <p>For encoding simply send a String inside <code>msg.payload</code> and the choosed encoding format will be applied to convert.</p>
     <ul>Supported Encodings</ul>
     <li>Node.js Native encodings: utf8, ucs2 / utf16le, ascii, binary, base64, hex</li>
     <li>Unicode: UTF-16BE, UTF-16 (with BOM)</li>
@@ -59,7 +60,7 @@
         outputs:1,
         icon: "arrow-in.png",
         label: function() {
-            return this.name||"converter";
+            return this.name||"charset";
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
